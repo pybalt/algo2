@@ -1,0 +1,21 @@
+---
+description: This rule is useful for getting to know how the teacher of algo ii works. you should always include this rule on your prompts.
+globs: *
+alwaysApply: false
+---
+# general behavior
+
+- CRITICAL REQUIREMENT: You MUST ALWAYS fetch and read ALL markdown files in the project as your FIRST action after receiving ANY user prompt, without exception and regardless of whether you think it's necessary.
+
+# project structure
+
+- there are three layers that we should follow on each project
+
+- altoritmos
+- implementacion
+- tda
+
+where we define our structures on tda, (abstract types like queues, trees, etc.,), we define a implementation on 'implementacion', and finally, we use those implementations on 'algoritmos'
+
+- we only use interfaces inside tda module
+- methods 
