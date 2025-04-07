@@ -26,12 +26,27 @@ public class TareaConjuntos{
         conjunto.agregar(6);
         conjunto.agregar(17);
         conjunto.agregar(25);
-        int cantidadElementos = 5;
+
+        ConjuntoTDA temp = new ConjuntoTA();
+        temp.inicializarConjunto();
+        int size = 0;
+        while(!conjunto.conjuntoVacio()) {
+            int elem = conjunto.elegir();
+            temp.agregar(elem);
+            conjunto.sacar(elem);
+            size++;
+        }
+
+        while(!temp.conjuntoVacio()) {
+            int elem = temp.elegir();
+            conjunto.agregar(elem);
+            temp.sacar(elem);
+        }
 
         ConjuntoTDA resultado = new ConjuntoTA();
         resultado.inicializarConjunto();
 
-        for(int i = 0; i < cantidadElementos; i++) {
+        for(int i = 0; i < size; i++) {
             int suma = 0;
             int elementoAnterior = 0;
             boolean continuarSumando = true;
