@@ -18,6 +18,19 @@ import implementacion.ConjuntoTA;
 
 public class TareaConjuntos{
 
+    /*
+     * No está claro si al seleccionar un elemento, el mismo deja de estar
+     * disponible para ser seleccionado después.
+     * 
+     * en esta tarea, se asume que la aleatoriedad implica la posibilidad
+     * de sacar el mismo elemento en varias ocasiones.
+     * 
+     * =========
+     * En caso de que los elementos no puedan repetirse,
+     * se debería usar el conjunto temporal para ir guardando los elementos
+     * que no pueden volver a ser seleccionados.
+     * Para luego usarlo para restablecer el conjunto original.
+     */
     public static void main(String[] args){
         ConjuntoTDA conjunto = new ConjuntoTA();
         conjunto.inicializarConjunto();
