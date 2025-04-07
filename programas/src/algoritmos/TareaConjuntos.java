@@ -27,6 +27,9 @@ public class TareaConjuntos{
         conjunto.agregar(17);
         conjunto.agregar(25);
 
+        // determina dinamicamente el numero de elementos
+        // (no hay un metodo size() en el TDA)
+        // conjunto.tamaño es una variable privada
         ConjuntoTDA temp = new ConjuntoTA();
         temp.inicializarConjunto();
         int size = 0;
@@ -36,7 +39,7 @@ public class TareaConjuntos{
             conjunto.sacar(elem);
             size++;
         }
-
+        // restauramos el conjunto original
         while(!temp.conjuntoVacio()) {
             int elem = temp.elegir();
             conjunto.agregar(elem);

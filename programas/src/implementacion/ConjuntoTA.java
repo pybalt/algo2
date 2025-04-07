@@ -3,8 +3,8 @@ package implementacion;
 import tda.ConjuntoTDA;
 
 public class ConjuntoTA implements ConjuntoTDA {
-    private int[] elementos;
-    private int tamaño;
+    int[] elementos;
+    int tamaño;
     public void agregar(int x){
         if(!pertenece(x)){
             elementos[tamaño] = x;
