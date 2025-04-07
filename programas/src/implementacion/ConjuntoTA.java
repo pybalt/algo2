@@ -22,7 +22,8 @@ public class ConjuntoTA implements ConjuntoTDA {
         }
     }
     public int elegir(){
-        return elementos[tamaño - 1];
+        int randomIndex = (int)(Math.random() * tamaño);
+        return elementos[randomIndex];
     }
     public boolean pertenece(int x){
         int i = 0;
@@ -31,7 +32,7 @@ public class ConjuntoTA implements ConjuntoTDA {
         }
         return i < tamaño;
     }
-    public int conjuntoVacio(){
+    public boolean conjuntoVacio(){
         return tamaño == 0;
     }
     public void inicializarConjunto(){
