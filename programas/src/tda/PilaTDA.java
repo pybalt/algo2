@@ -1,42 +1,36 @@
 package tda;
 
-/**
- * Interfaz para una estructura de datos tipo Pila (Stack)
- * Sigue el principio LIFO (Last In, First Out)
- */
 public interface PilaTDA {
-    
     /**
-     * Agrega un elemento en el tope de la pila
-     * @param valor Elemento a agregar
-     * Debe estar inicializada la pila
+     * Este método inicializa la estructura
      */
-    void apilar(int valor);
-    
+    public void inicializar();
+
     /**
-     * Elimina el elemento del tope de la pila
-     * Debe estar inicializada la pila
-     * Debe haber elementos en la pila
+     * Método para apilar
+     * Debe estar inicializada
+     *
+     * @param valor
      */
-    void desapilar();
-    
+    public void apilar(int valor);
+
     /**
-     * Verifica si la pila está vacía
-     * @return true si la pila está vacía, false en caso contrario
-     * Debe estar inicializada la pila
+     * Método para desapilar
+     * No tiene que estar vacía
      */
-    boolean estaVacia();
-    
+    public void desapilar();
+
     /**
-     * Devuelve el elemento del tope de la pila sin eliminarlo
-     * @return Elemento del tope de la pila
-     * Debe estar inicializada la pila
-     * Debe haber elementos en la pila
+     * Método para obtener el valor del tope
+     * No tiene que estar vacía
+     * @return int Valor del tope
      */
-    int tope();
-    
+    public int tope();
+
     /**
-     * Inicializa la pila, dejándola vacía
+     * Método para saber si la pila está vacía
+     * Tiene que estar inicializada
+     * @return boolean True si está vacía, false si no está vacía
      */
-    void inicializar();
-} 
+    public boolean estaVacia();
+}

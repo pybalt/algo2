@@ -1,32 +1,39 @@
 package tda;
 
 public interface DiccionarioSimpleTDA {
-    
     /**
-     * Inicializa el diccionario
+     * Este método inicializa la estructura
      */
-    void InicializarDiccionario();
-    /**
-     * Requiere inicializar
-     * @param clave
-     * @param valor
-     */
-    void Agregar(int clave, int valor);
-    /**
-     * Requiere inicializar
-     * @param int
-     */
-    void Eliminar(int clave);
-    /**
-     * Requiere inicializar y que la clave exista
-     * @param clave
-     * @return
-     */
-    int Recuperar(int clave);
-    /**
-     * Requiere inicializar
-     * @return
-     */
-    ConjuntoTDA Claves();
+    public void inicializar();
 
+    /**
+     * Método para agregar un elemento al diccionario
+     * Debe estar inicializado
+     *
+     * @param key
+     * @param value
+     */
+    public void agregar(int key, int value);
+
+    /**
+     * Método para eliminar un elemento del diccionario
+     * Debe estar inicializado
+     *
+     * @param key
+     */
+    public void eliminar(int key);
+
+    /**
+     * Método para recuperar un elemento del diccionario
+     * El diccionario no debe estar vacío y debe existir la clave
+     *
+     * @param key
+     */
+    public int recuperar(int key);
+
+    /**
+     * Método para obtener todas las claves del diccionario
+     * Debe estar inicializado
+     */
+    public ConjuntoTDA obtenerClaves();
 }

@@ -1,20 +1,38 @@
 package tda;
 
-/**
- * FIFO: First In First Out
- */
 public interface ColaTDA {
     /**
-     * Agregamos un elemento al final de la estructura
+     * Este método inicializa la estructura
+     */
+    public void inicializar();
+
+    /**
+     * Método para acolar
+     * Debe estar inicializada la cola
+     *
      * @param valor
      */
-    void acolar(int valor);
+    public void acolar(int valor);
 
-    void desacolar();
+    /**
+     * Método para desacolar
+     * No tiene que estar vacía
+     */
+    public void desacolar();
 
-    boolean estaVacia();
+    /**
+     * Método para obtener el primer valor
+     * No tiene que estar vacía
+     *
+     * @return int Valor del primer elemento
+     */
+    public int primero();
 
-    int primero();
-
-    void inicializar();
+    /**
+     * Método para saber si la cola está vacía
+     * Tiene que estar inicializada
+     *
+     * @return boolean True si está vacía, false si no está vacía
+     */
+    public boolean estaVacia();
 }

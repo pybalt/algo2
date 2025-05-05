@@ -1,42 +1,44 @@
 package tda;
+
 public interface ColaPrioridadTDA {
+    public void inicializar();
+
     /**
-     * Inicializa la cola de prioridad
+     * Método par acolar
+     * Debe estar inicializada
+     *
+     * @param valor
+     * @param prioridad
      */
-    void inicializar();
-    
+    public void acolar(int valor, int prioridad);
+
     /**
-     * Agrega un elemento a la cola con su prioridad
-     * Precondición: La cola debe estar inicializada
-     * @param valor Valor a acolar
-     * @param prioridad Prioridad del elemento
+     * Método para desacolar
+     * No tiene que estar vacía
      */
-    void acolar(int valor, int prioridad);
-    
+    public void desacolar();
+
     /**
-     * Elimina el elemento de mayor prioridad
-     * Precondición: La cola debe estar inicializada y no vacía
+     * Método para saber si la cola está vacía
+     * Tiene que estar inicializada
+     *
+     * @return boolean True si está vacía, false si no está vacía
      */
-    void desacolar();
-    
+    public boolean estaVacia();
+
     /**
-     * Verifica si la cola está vacía
-     * Precondición: La cola debe estar inicializada
-     * @return true si está vacía, false en caso contrario
+     * Método para obtener el primer valor
+     * No tiene que estar vacía
+     *
+     * @return int Valor del primer elemento
      */
-    boolean estaVacia();
-    
+    public int primero();
+
     /**
-     * Devuelve el valor del elemento de mayor prioridad
-     * Precondición: La cola debe estar inicializada y no vacía
-     * @return El valor del primer elemento
+     * Método para obtener la prioridad del primer valor
+     * No tiene que estar vacía
+     *
+     * @return int Prioridad del primer elemento
      */
-    int primero();
-    
-    /**
-     * Devuelve la prioridad del elemento de mayor prioridad
-     * Precondición: La cola debe estar inicializada y no vacía
-     * @return La prioridad del primer elemento
-     */
-    int prioridad();
+    public int prioridad();
 }

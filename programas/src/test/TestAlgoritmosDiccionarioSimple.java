@@ -2,14 +2,14 @@ package test;
 
 import tda.DiccionarioSimpleTDA;
 import tda.ConjuntoTDA;
-import implementacion.DicSimpleA;
-import implementacion.ConjuntoLD;
+import implementacion.DiccionarioSimpleEstatico;
+import implementacion.ConjuntoEstatico;
 import algoritmos.AlgoritmosDiccionarioSimple;
 
 public class TestAlgoritmosDiccionarioSimple {
 
     public static void main(String[] args) {
-        DiccionarioSimpleTDA dicEntrada = new DicSimpleA();
+        DiccionarioSimpleTDA dicEntrada = new DiccionarioSimpleEstatico();
         dicEntrada.InicializarDiccionario();
 
         // Populate input dictionary with example data
@@ -33,11 +33,11 @@ public class TestAlgoritmosDiccionarioSimple {
      */
     public static void mostrarDiccionario(DiccionarioSimpleTDA dic) {
         ConjuntoTDA claves = dic.Claves();
-        ConjuntoTDA clavesCopia = new ConjuntoLD(); // Use a copy to avoid modifying the original keys set
+        ConjuntoTDA clavesCopia = new ConjuntoEstatico();
         clavesCopia.inicializarConjunto();
 
         // Copy keys
-        ConjuntoTDA aux = new ConjuntoLD();
+        ConjuntoTDA aux = new ConjuntoEstatico();
         aux.inicializarConjunto();
         while (!claves.conjuntoVacio()) {
             int k = claves.elegir();
@@ -46,8 +46,8 @@ public class TestAlgoritmosDiccionarioSimple {
         }
         while (!aux.conjuntoVacio()) {
             int k = aux.elegir();
-            claves.agregar(k); // Restore original set
-            clavesCopia.agregar(k); // Populate copy
+            claves.agregar(k);
+            clavesCopia.agregar(k);
             aux.sacar(k);
         }
 

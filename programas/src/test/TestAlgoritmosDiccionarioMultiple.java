@@ -1,8 +1,8 @@
 package test;
 
 import algoritmos.AlgoritmosDiccionarioMultiple;
-import implementacion.ConjuntoLD;
-import implementacion.DicMultipleA;
+import implementacion.ConjuntoEstatico;
+import implementacion.DiccionarioMultipleEstatico;
 import tda.ConjuntoTDA;
 import tda.DiccionarioMultipleTDA;
 
@@ -15,7 +15,7 @@ public class TestAlgoritmosDiccionarioMultiple {
     public static void testInvertirDiccionario() {
         System.out.println("Testing invertirDiccionarioConRepetidos...");
 
-        DiccionarioMultipleTDA originalDict = new DicMultipleA();
+        DiccionarioMultipleTDA originalDict = new DiccionarioMultipleEstatico();
         originalDict.inicializarDiccionario();
 
         // Populate original dictionary based on the example
@@ -48,7 +48,7 @@ public class TestAlgoritmosDiccionarioMultiple {
 
         // Expected keys: 5, 9, 19
         ConjuntoTDA clavesResultado = resultadoDict.claves();
-        ConjuntoTDA clavesEsperadas = new ConjuntoLD();
+        ConjuntoTDA clavesEsperadas = new ConjuntoEstatico();
         clavesEsperadas.inicializarConjunto();
         clavesEsperadas.agregar(5);
         clavesEsperadas.agregar(9);
@@ -62,7 +62,7 @@ public class TestAlgoritmosDiccionarioMultiple {
         }
 
         // Expected values for key 5: {2, 3, 4}
-        ConjuntoTDA valores5Esperado = new ConjuntoLD();
+        ConjuntoTDA valores5Esperado = new ConjuntoEstatico();
         valores5Esperado.inicializarConjunto();
         valores5Esperado.agregar(2);
         valores5Esperado.agregar(3);
@@ -75,45 +75,45 @@ public class TestAlgoritmosDiccionarioMultiple {
         }
 
         // Expected values for key 9: {2, 4}
-        ConjuntoTDA valores9Esperado = new ConjuntoLD();
+        ConjuntoTDA valores9Esperado = new ConjuntoEstatico();
         valores9Esperado.inicializarConjunto();
         valores9Esperado.agregar(2);
         valores9Esperado.agregar(4);
-         if (!conjuntosIguales(resultadoDict.recuperar(9), valores9Esperado)) {
+        if (!conjuntosIguales(resultadoDict.recuperar(9), valores9Esperado)) {
             System.out.println("  FAILED: Values for key 9 mismatch.");
             System.out.print("    Expected: "); imprimirConjunto(valores9Esperado);
             System.out.print("    Got: "); imprimirConjunto(resultadoDict.recuperar(9));
-             passed = false;
+            passed = false;
         }
 
         // Expected values for key 19: {3, 4}
-        ConjuntoTDA valores19Esperado = new ConjuntoLD();
+        ConjuntoTDA valores19Esperado = new ConjuntoEstatico();
         valores19Esperado.inicializarConjunto();
         valores19Esperado.agregar(3);
         valores19Esperado.agregar(4);
-         if (!conjuntosIguales(resultadoDict.recuperar(19), valores19Esperado)) {
+        if (!conjuntosIguales(resultadoDict.recuperar(19), valores19Esperado)) {
             System.out.println("  FAILED: Values for key 19 mismatch.");
             System.out.print("    Expected: "); imprimirConjunto(valores19Esperado);
             System.out.print("    Got: "); imprimirConjunto(resultadoDict.recuperar(19));
-             passed = false;
+            passed = false;
         }
 
         // --- Check non-included keys --- 
         // Value 7 appears only once (key 2), should not be a key in result
         if (clavesResultado.pertenece(7)) {
-             System.out.println("  FAILED: Key 7 should not be present in result.");
-             passed = false;
+            System.out.println("  FAILED: Key 7 should not be present in result.");
+            passed = false;
         }
         // Value 2 appears only once (key 3), should not be a key in result
-         if (clavesResultado.pertenece(2)) {
-             System.out.println("  FAILED: Key 2 should not be present in result.");
-             passed = false;
+        if (clavesResultado.pertenece(2)) {
+            System.out.println("  FAILED: Key 2 should not be present in result.");
+            passed = false;
         }
 
         if (passed) {
             System.out.println("  PASSED!");
         }
-         System.out.println("-----------------------------------------");
+        System.out.println("-----------------------------------------");
     }
 
     // Helper method to check if two sets are equal
@@ -146,30 +146,29 @@ public class TestAlgoritmosDiccionarioMultiple {
         return c2Copia.conjuntoVacio();
     }
 
-    // Helper method to copy a ConjuntoTDA (same as in Algoritmos class, could be moved to a util class)
+    // Helper method to copy a ConjuntoTDA
     private static ConjuntoTDA copiarConjunto(ConjuntoTDA original) {
-        ConjuntoTDA copia = new ConjuntoLD();
+        ConjuntoTDA copia = new ConjuntoEstatico();
         copia.inicializarConjunto();
-        ConjuntoTDA aux = new ConjuntoLD();
+        ConjuntoTDA aux = new ConjuntoEstatico();
         aux.inicializarConjunto();
 
         // Need a mutable copy of the original to iterate
-        ConjuntoTDA originalMutable = new ConjuntoLD();
+        ConjuntoTDA originalMutable = new ConjuntoEstatico();
         originalMutable.inicializarConjunto();
-        ConjuntoTDA temp = new ConjuntoLD(); // To restore original
+        ConjuntoTDA temp = new ConjuntoEstatico(); // To restore original
         temp.inicializarConjunto();
         while(!original.conjuntoVacio()) {
-             int x = original.elegir();
-             temp.agregar(x);
-             originalMutable.agregar(x);
-             original.sacar(x);
+            int x = original.elegir();
+            temp.agregar(x);
+            originalMutable.agregar(x);
+            original.sacar(x);
         }
-         while(!temp.conjuntoVacio()) {
-             int x = temp.elegir();
-             original.agregar(x); // Restore original
-             temp.sacar(x);
+        while(!temp.conjuntoVacio()) {
+            int x = temp.elegir();
+            original.agregar(x); // Restore original
+            temp.sacar(x);
         }
-
 
         while (!originalMutable.conjuntoVacio()) {
             int x = originalMutable.elegir();
@@ -179,8 +178,7 @@ public class TestAlgoritmosDiccionarioMultiple {
 
         while (!aux.conjuntoVacio()) {
             int x = aux.elegir();
-           // originalMutable.agregar(x); // Restore original copy (not needed here)
-            copia.agregar(x);    // Add to the final copy
+            copia.agregar(x);
             aux.sacar(x);
         }
         return copia;

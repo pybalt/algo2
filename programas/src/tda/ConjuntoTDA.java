@@ -2,35 +2,47 @@ package tda;
 
 public interface ConjuntoTDA {
     /**
-     * Agrega un elemento al conjunto
-     * Debe estar inicializado
+     * Este método inicializa la estructura
      */
-    public void agregar(int x);
+    public void inicializar();
+
     /**
-     * Saca un elemento del conjunto
+     * Método para agregar un elemento al conjunto
      * Debe estar inicializado
-     * No debe estar vacio
+     *
+     * @param valor
      */
-    public void sacar(int x);
+    public void agregar(int valor);
+
     /**
-     * Elige un elemento del conjunto
+     * Método para saber si un valor pertenece al conjunto
      * Debe estar inicializado
-     * No debe estar vacio
+     *
+     * @param valor
+     */
+    public boolean pertenece(int valor);
+
+    /**
+     * Método para eliminar un valor del conjunto
+     * Debe estar inicializado y no vacío
+     *
+     * @param valor
+     */
+    public void sacar(int valor);
+
+    /**
+     * Elegir un elemento al azar del conjunto
+     * Tiene que estar inicializado y no vacío
+     *
+     * @return int Elemento elegido
      */
     public int elegir();
+
     /**
-     * Verifica si un elemento pertenece al conjunto
-     * Debe estar inicializado
-     * No debe estar vacio
+     * Saber si el conjunto está vacío
+     * Tiene que estar inicializado
+     *
+     * @return boolean True si está vacío, false si no está inicializado
      */
-    public boolean pertenece(int x);
-    /**
-     * Verifica si el conjunto esta vacio
-     * Debe estar inicializado
-     */
-    public boolean conjuntoVacio();
-    /**
-     * Inicializa el conjunto
-     */
-    public void inicializarConjunto();
+    public boolean estaVacio();
 }
