@@ -1,35 +1,34 @@
 package implementacion;
-
 import tda.PilaTDA;
 
 public class PilaEstatica implements PilaTDA {
-    private int[] valores;
-    private int cantidad;
+    private int[] elementos;
+    private int indice;
+
+    @Override
+    public void inicializar() {
+        elementos = new int[100];
+        indice = 0;
+    }
 
     @Override
     public void apilar(int valor) {
-        valores[cantidad] = valor;
-        cantidad++;
-    };
+        elementos[indice] = valor;
+        indice++;
+    }
 
     @Override
     public void desapilar() {
-        cantidad--;
-    };
+        indice--;
+    }
+
+    @Override
+    public int tope() {
+        return elementos[indice - 1];
+    }
 
     @Override
     public boolean estaVacia() {
-        return cantidad == 0;
-    };
-
-    @Override
-    public void inicializar(){
-        valores = new int[100];
-        cantidad = 0;
-    };
-
-    @Override
-    public int tope(){
-        return valores[cantidad - 1];
-    };
+        return indice == 0;
+    }
 }

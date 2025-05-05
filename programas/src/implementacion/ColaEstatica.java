@@ -2,42 +2,37 @@ package implementacion;
 
 import tda.ColaTDA;
 
-/**
- * Primera implementacion
- */
-public class ColaEstatica implements ColaTDA {
+// FIFO: first in, first out
+// LILO: last in, last out
 
-    private int[] valores;
+public class ColaEstatica implements ColaTDA {
+    private int[] elementos;
     private int cantidad;
-    @Override
-    public void acolar(int valor) {
-        valores [cantidad] = valor;
-        cantidad ++;
+
+    public void inicializar() {
+        elementos = new int[100];
+        cantidad = 0;
     }
 
-    @Override
+    public void acolar(int valor) {
+        elementos[cantidad] = valor;
+        cantidad++;
+    }
+
     public void desacolar() {
-
-        for (int actual = 0; actual < cantidad; actual ++) {
-            valores[actual] = valores[actual + 1];
+        for (int i = 0; i < cantidad; i++) {
+            elementos[i] = elementos[i + 1];
         }
-        cantidad --;
 
+        cantidad--;
+    }
+
+    public int primero() {
+        return elementos[0];
     }
 
     @Override
     public boolean estaVacia() {
         return cantidad == 0;
-    }
-
-    @Override
-    public int primero() {
-        return valores[0];
-    }
-
-    @Override
-    public void inicializar() {
-        valores = new int[100];
-        cantidad = 0;
     }
 }
