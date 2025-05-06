@@ -16,7 +16,7 @@ public class TestAlgoritmosDiccionarioMultiple {
         System.out.println("Testing invertirDiccionarioConRepetidos...");
 
         DiccionarioMultipleTDA originalDict = new DiccionarioMultipleEstatico();
-        originalDict.inicializarDiccionario();
+        originalDict.inicializar();
 
         // Populate original dictionary based on the example
         // {2} ---> {3, 5, 7, 9, 10}
@@ -47,9 +47,9 @@ public class TestAlgoritmosDiccionarioMultiple {
         boolean passed = true;
 
         // Expected keys: 5, 9, 19
-        ConjuntoTDA clavesResultado = resultadoDict.claves();
+        ConjuntoTDA clavesResultado = resultadoDict.obtenerClaves();
         ConjuntoTDA clavesEsperadas = new ConjuntoEstatico();
-        clavesEsperadas.inicializarConjunto();
+        clavesEsperadas.inicializar();
         clavesEsperadas.agregar(5);
         clavesEsperadas.agregar(9);
         clavesEsperadas.agregar(19);
@@ -57,13 +57,13 @@ public class TestAlgoritmosDiccionarioMultiple {
         if (!conjuntosIguales(clavesResultado, clavesEsperadas)) {
             System.out.println("  FAILED: Result keys mismatch.");
             System.out.print("    Expected: "); imprimirConjunto(clavesEsperadas);
-            System.out.print("    Got: "); imprimirConjunto(resultadoDict.claves()); // Print fresh copy
+            System.out.print("    Got: "); imprimirConjunto(resultadoDict.obtenerClaves()); // Print fresh copy
             passed = false;
         }
 
         // Expected values for key 5: {2, 3, 4}
         ConjuntoTDA valores5Esperado = new ConjuntoEstatico();
-        valores5Esperado.inicializarConjunto();
+        valores5Esperado.inicializar();
         valores5Esperado.agregar(2);
         valores5Esperado.agregar(3);
         valores5Esperado.agregar(4);
@@ -76,7 +76,7 @@ public class TestAlgoritmosDiccionarioMultiple {
 
         // Expected values for key 9: {2, 4}
         ConjuntoTDA valores9Esperado = new ConjuntoEstatico();
-        valores9Esperado.inicializarConjunto();
+        valores9Esperado.inicializar();
         valores9Esperado.agregar(2);
         valores9Esperado.agregar(4);
         if (!conjuntosIguales(resultadoDict.recuperar(9), valores9Esperado)) {
@@ -88,7 +88,7 @@ public class TestAlgoritmosDiccionarioMultiple {
 
         // Expected values for key 19: {3, 4}
         ConjuntoTDA valores19Esperado = new ConjuntoEstatico();
-        valores19Esperado.inicializarConjunto();
+        valores19Esperado.inicializar();
         valores19Esperado.agregar(3);
         valores19Esperado.agregar(4);
         if (!conjuntosIguales(resultadoDict.recuperar(19), valores19Esperado)) {
@@ -126,14 +126,14 @@ public class TestAlgoritmosDiccionarioMultiple {
         int size2 = 0;
         ConjuntoTDA temp1 = copiarConjunto(c1Copia);
         ConjuntoTDA temp2 = copiarConjunto(c2Copia);
-        while(!temp1.conjuntoVacio()) { size1++; temp1.sacar(temp1.elegir()); }
-        while(!temp2.conjuntoVacio()) { size2++; temp2.sacar(temp2.elegir()); }
+        while(!temp1.estaVacio()) { size1++; temp1.sacar(temp1.elegir()); }
+        while(!temp2.estaVacio()) { size2++; temp2.sacar(temp2.elegir()); }
         if (size1 != size2) {
             return false;
         }
 
         // Check elements
-        while (!c1Copia.conjuntoVacio()) {
+        while (!c1Copia.estaVacio()) {
             int elemento = c1Copia.elegir();
             if (!c2Copia.pertenece(elemento)) {
                 return false;
@@ -143,40 +143,40 @@ public class TestAlgoritmosDiccionarioMultiple {
         }
 
         // If we finished and c2 is also empty, they had the same elements
-        return c2Copia.conjuntoVacio();
+        return c2Copia.estaVacio();
     }
 
     // Helper method to copy a ConjuntoTDA
     private static ConjuntoTDA copiarConjunto(ConjuntoTDA original) {
         ConjuntoTDA copia = new ConjuntoEstatico();
-        copia.inicializarConjunto();
+        copia.inicializar();
         ConjuntoTDA aux = new ConjuntoEstatico();
-        aux.inicializarConjunto();
+        aux.inicializar();
 
         // Need a mutable copy of the original to iterate
         ConjuntoTDA originalMutable = new ConjuntoEstatico();
-        originalMutable.inicializarConjunto();
+        originalMutable.inicializar();
         ConjuntoTDA temp = new ConjuntoEstatico(); // To restore original
-        temp.inicializarConjunto();
-        while(!original.conjuntoVacio()) {
+        temp.inicializar();
+        while(!original.estaVacio()) {
             int x = original.elegir();
             temp.agregar(x);
             originalMutable.agregar(x);
             original.sacar(x);
         }
-        while(!temp.conjuntoVacio()) {
+        while(!temp.estaVacio()) {
             int x = temp.elegir();
             original.agregar(x); // Restore original
             temp.sacar(x);
         }
 
-        while (!originalMutable.conjuntoVacio()) {
+        while (!originalMutable.estaVacio()) {
             int x = originalMutable.elegir();
             aux.agregar(x);
             originalMutable.sacar(x);
         }
 
-        while (!aux.conjuntoVacio()) {
+        while (!aux.estaVacio()) {
             int x = aux.elegir();
             copia.agregar(x);
             aux.sacar(x);
@@ -189,7 +189,7 @@ public class TestAlgoritmosDiccionarioMultiple {
         ConjuntoTDA copia = copiarConjunto(c);
         System.out.print("{ ");
         boolean first = true;
-        while (!copia.conjuntoVacio()) {
+        while (!copia.estaVacio()) {
             if (!first) {
                 System.out.print(", ");
             }

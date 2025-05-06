@@ -10,12 +10,12 @@ public class TestAlgoritmosDiccionarioSimple {
 
     public static void main(String[] args) {
         DiccionarioSimpleTDA dicEntrada = new DiccionarioSimpleEstatico();
-        dicEntrada.InicializarDiccionario();
+        dicEntrada.inicializar();
 
         // Populate input dictionary with example data
-        dicEntrada.Agregar(1, 23);
-        dicEntrada.Agregar(3, 56);
-        dicEntrada.Agregar(4, 564);
+        dicEntrada.agregar(1, 23);
+        dicEntrada.agregar(3, 56);
+        dicEntrada.agregar(4, 564);
 
         System.out.println("Diccionario de entrada:");
         mostrarDiccionario(dicEntrada);
@@ -32,19 +32,19 @@ public class TestAlgoritmosDiccionarioSimple {
      * @param dic The dictionary to print.
      */
     public static void mostrarDiccionario(DiccionarioSimpleTDA dic) {
-        ConjuntoTDA claves = dic.Claves();
+        ConjuntoTDA claves = dic.obtenerClaves();
         ConjuntoTDA clavesCopia = new ConjuntoEstatico();
-        clavesCopia.inicializarConjunto();
+        clavesCopia.inicializar();
 
         // Copy keys
         ConjuntoTDA aux = new ConjuntoEstatico();
-        aux.inicializarConjunto();
-        while (!claves.conjuntoVacio()) {
+        aux.inicializar();
+        while (!claves.estaVacio()) {
             int k = claves.elegir();
             aux.agregar(k);
             claves.sacar(k);
         }
-        while (!aux.conjuntoVacio()) {
+        while (!aux.estaVacio()) {
             int k = aux.elegir();
             claves.agregar(k);
             clavesCopia.agregar(k);
@@ -53,12 +53,12 @@ public class TestAlgoritmosDiccionarioSimple {
 
         System.out.print("{");
         boolean primero = true;
-        while (!clavesCopia.conjuntoVacio()) {
+        while (!clavesCopia.estaVacio()) {
             if (!primero) {
                 System.out.print(", ");
             }
             int clave = clavesCopia.elegir();
-            System.out.print(clave + ": " + dic.Recuperar(clave));
+            System.out.print(clave + ": " + dic.recuperar(clave));
             clavesCopia.sacar(clave);
             primero = false;
         }
