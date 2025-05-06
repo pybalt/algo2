@@ -96,11 +96,6 @@ public class DiccionarioMultipleEstatico implements DiccionarioMultipleTDA {
 
     }
 
-    @Override
-    public boolean estaVacio() {
-        return cantidadClaves == 0;
-    }
-
     private int clave2Pos(int clave) {
         int resultado = -1;
         boolean encontrado = false;
