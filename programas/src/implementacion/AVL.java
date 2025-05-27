@@ -18,13 +18,6 @@ public class AVL implements ABBTDA {
     public ABBTDA hijoDerecho() {
         return raiz.hijoDerecho;
     }
-    private void setHijoDerecho(ABBTDA nodo){
-        raiz.hijoDerecho = nodo;
-    }
-    
-    private void setHijoIzquierdo(ABBTDA nodo){
-        raiz.hijoIzquierdo = nodo;
-    }
     @Override
     public void inicializar() {
         raiz = null;
@@ -112,10 +105,13 @@ public class AVL implements ABBTDA {
         ABBTDA T3 = hijoIzquierdo().hijoDerecho();
         ABBTDA T4 = hijoDerecho();
 
-        // Creamos z con T3 y T4
+        // Reorganizamos: y se convierte en la nueva raíz
         raiz.valor = valorY;
+        
+        // Creamos nuevo subárbol derecho (z con T3 y T4)
         AVL nuevoZ = new AVL();
         nuevoZ.inicializar();
+        nuevoZ.raiz = new Nodo();
         nuevoZ.raiz.valor = valorZ;
         nuevoZ.raiz.hijoDerecho = T4;
         nuevoZ.raiz.hijoIzquierdo = T3;
