@@ -5,8 +5,8 @@ public class AVL implements ABBTDA {
     class Nodo {
         int valor;
         int altura;
-        ABBTDA hijoIzquierdo;
-        ABBTDA hijoDerecho;
+        ABBTDA izquierdo;
+        ABBTDA derecho;
     }
     private Nodo raiz;
     
@@ -16,7 +16,7 @@ public class AVL implements ABBTDA {
      */
     @Override
     public ABBTDA hijoIzquierdo() {
-        return raiz.hijoIzquierdo;
+        return raiz.izquierdo;
     }
 
     /**
@@ -25,7 +25,7 @@ public class AVL implements ABBTDA {
      */
     @Override
     public ABBTDA hijoDerecho() {
-        return raiz.hijoDerecho;
+        return raiz.derecho;
     }
     
     /**
@@ -68,18 +68,18 @@ public class AVL implements ABBTDA {
             raiz = new Nodo();
             raiz.valor = valor;
             raiz.altura = 1;
-            raiz.hijoIzquierdo = new AVL();
-            raiz.hijoIzquierdo.inicializar();
-            raiz.hijoDerecho = new AVL();
-            raiz.hijoDerecho.inicializar();
+            raiz.izquierdo = new AVL();
+            raiz.izquierdo.inicializar();
+            raiz.derecho = new AVL();
+            raiz.derecho.inicializar();
         }else if(raiz.valor > valor){
-            raiz.hijoIzquierdo.agregar(valor);
+            raiz.izquierdo.agregar(valor);
         }else if(raiz.valor < valor){
-            raiz.hijoDerecho.agregar(valor);
+            raiz.derecho.agregar(valor);
         }
         // Fase 2: Actualiza altura - O(1) accediendo alturas almacenadas
-        int alturaIzq = raiz.hijoIzquierdo.estaVacio() ? 0 : ((AVL)raiz.hijoIzquierdo).raiz.altura;
-        int alturaDer = raiz.hijoDerecho.estaVacio() ? 0 : ((AVL)raiz.hijoDerecho).raiz.altura;
+        int alturaIzq = raiz.izquierdo.estaVacio() ? 0 : ((AVL)raiz.izquierdo).raiz.altura;
+        int alturaDer = raiz.derecho.estaVacio() ? 0 : ((AVL)raiz.derecho).raiz.altura;
         raiz.altura = 1 + Math.max(alturaIzq, alturaDer);
         // Fase 3: Calcula balance
         int balance = balance(raiz);
@@ -103,26 +103,26 @@ public class AVL implements ABBTDA {
         
         // Fase 1: Eliminación BST estándar
         if (valor < raiz.valor) {
-            raiz.hijoIzquierdo.eliminar(valor);
+            raiz.izquierdo.eliminar(valor);
         } else if (valor > raiz.valor) {
-            raiz.hijoDerecho.eliminar(valor);
+            raiz.derecho.eliminar(valor);
         } else {
             // Este es el nodo a eliminar
             
             // Caso 1: Nodo hoja
-            if (raiz.hijoIzquierdo.estaVacio() && raiz.hijoDerecho.estaVacio()) {
+            if (raiz.izquierdo.estaVacio() && raiz.derecho.estaVacio()) {
                 raiz = null;
                 return;
             }
             
             // Caso 2: Nodo con solo hijo derecho
-            else if (raiz.hijoIzquierdo.estaVacio()) {
-                AVL temp = (AVL) raiz.hijoDerecho;
+            else if (raiz.izquierdo.estaVacio()) {
+                AVL temp = (AVL) raiz.derecho;
                 if (!temp.estaVacio()) {
                     raiz.valor = temp.raiz.valor;
                     raiz.altura = temp.raiz.altura;
-                    raiz.hijoIzquierdo = temp.raiz.hijoIzquierdo;
-                    raiz.hijoDerecho = temp.raiz.hijoDerecho;
+                    raiz.izquierdo = temp.raiz.izquierdo;
+                    raiz.derecho = temp.raiz.derecho;
                 } else {
                     raiz = null;
                 }
@@ -130,13 +130,13 @@ public class AVL implements ABBTDA {
             }
             
             // Caso 3: Nodo con solo hijo izquierdo
-            else if (raiz.hijoDerecho.estaVacio()) {
-                AVL temp = (AVL) raiz.hijoIzquierdo;
+            else if (raiz.derecho.estaVacio()) {
+                AVL temp = (AVL) raiz.izquierdo;
                 if (!temp.estaVacio()) {
                     raiz.valor = temp.raiz.valor;
                     raiz.altura = temp.raiz.altura;
-                    raiz.hijoIzquierdo = temp.raiz.hijoIzquierdo;
-                    raiz.hijoDerecho = temp.raiz.hijoDerecho;
+                    raiz.izquierdo = temp.raiz.izquierdo;
+                    raiz.derecho = temp.raiz.derecho;
                 } else {
                     raiz = null;
                 }
@@ -146,9 +146,9 @@ public class AVL implements ABBTDA {
             // Caso 4: Nodo con dos hijos
             else {
                 // Encontrar el sucesor inorden (menor valor en subárbol derecho)
-                int sucesor = encontrarMinimo(raiz.hijoDerecho);
+                int sucesor = encontrarMinimo(raiz.derecho);
                 raiz.valor = sucesor;
-                raiz.hijoDerecho.eliminar(sucesor);
+                raiz.derecho.eliminar(sucesor);
             }
         }
         
@@ -158,8 +158,8 @@ public class AVL implements ABBTDA {
         }
         
         // Fase 2: Actualizar altura - O(1) accediendo alturas almacenadas
-        int alturaIzq = raiz.hijoIzquierdo.estaVacio() ? 0 : ((AVL)raiz.hijoIzquierdo).raiz.altura;
-        int alturaDer = raiz.hijoDerecho.estaVacio() ? 0 : ((AVL)raiz.hijoDerecho).raiz.altura;
+        int alturaIzq = raiz.izquierdo.estaVacio() ? 0 : ((AVL)raiz.izquierdo).raiz.altura;
+        int alturaDer = raiz.derecho.estaVacio() ? 0 : ((AVL)raiz.derecho).raiz.altura;
         raiz.altura = 1 + Math.max(alturaIzq, alturaDer);
         
         // Fase 3: Calcular balance - O(1) usando alturas almacenadas
@@ -211,8 +211,8 @@ public class AVL implements ABBTDA {
         nuevoZ.raiz.altura = 1 + Math.max(alturaT1, alturaT2);
         
         // Asignamos los nuevos hijos
-        raiz.hijoIzquierdo = nuevoZ;
-        raiz.hijoDerecho = x;
+        raiz.izquierdo = nuevoZ;
+        raiz.derecho = x;
         
         // Actualizamos altura de la nueva raíz
         int alturaX = x.estaVacio() ? 0 : ((AVL)x).raiz.altura;
@@ -249,8 +249,8 @@ public class AVL implements ABBTDA {
         nuevoZ.raiz.altura = 1 + Math.max(alturaT3, alturaT4);
         
         // Asignamos nuevos hijos
-        raiz.hijoIzquierdo = x;
-        raiz.hijoDerecho = nuevoZ;
+        raiz.izquierdo = x;
+        raiz.derecho = nuevoZ;
         
         // Actualizamos altura de la nueva raíz
         int alturaX = x.estaVacio() ? 0 : ((AVL)x).raiz.altura;
@@ -265,7 +265,7 @@ public class AVL implements ABBTDA {
         if (nodo == null) {
             return 0;
         }
-        return alturaTDA(nodo.hijoDerecho) - alturaTDA(nodo.hijoIzquierdo);
+        return alturaTDA(nodo.derecho) - alturaTDA(nodo.izquierdo);
     }
 
     /**
@@ -288,8 +288,8 @@ public class AVL implements ABBTDA {
             raiz = new Nodo();
         }
         raiz.valor = valor;
-        raiz.hijoIzquierdo = hijoIzq;
-        raiz.hijoDerecho = hijoDer;
+        raiz.izquierdo = hijoIzq;
+        raiz.derecho = hijoDer;
     }
 
     /**
@@ -311,21 +311,21 @@ public class AVL implements ABBTDA {
      */
     private void rebalancear(int balance) {
         // Caso Left Left (LL) - Rotacion simple derecha
-        if (balance < -1 && balanceTDA(raiz.hijoIzquierdo) <= 0) {
+        if (balance < -1 && balanceTDA(raiz.izquierdo) <= 0) {
             rotarDerecha();
         }
         // Caso Right Right (RR) - Rotacion simple izquierda  
-        else if (balance > 1 && balanceTDA(raiz.hijoDerecho) >= 0) {
+        else if (balance > 1 && balanceTDA(raiz.derecho) >= 0) {
             rotarIzquierda();
         }
         // Caso Left Right (LR) - Rotacion doble derecha
-        else if (balance < -1 && balanceTDA(raiz.hijoIzquierdo) > 0) {
-            ((AVL)raiz.hijoIzquierdo).rotarIzquierda();
+        else if (balance < -1 && balanceTDA(raiz.izquierdo) > 0) {
+            ((AVL)raiz.izquierdo).rotarIzquierda();
             rotarDerecha();
         }
         // Caso Right Left (RL) - Rotacion doble izquierda
-        else if (balance > 1 && balanceTDA(raiz.hijoDerecho) < 0) {
-            ((AVL)raiz.hijoDerecho).rotarDerecha();
+        else if (balance > 1 && balanceTDA(raiz.derecho) < 0) {
+            ((AVL)raiz.derecho).rotarDerecha();
             rotarIzquierda();
         }
     }
@@ -336,21 +336,21 @@ public class AVL implements ABBTDA {
      */
     private void rebalancearOptimizado(int balance) {
         // Caso Left Left (LL) - Rotacion simple derecha
-        if (balance < -1 && balanceOptimizado(raiz.hijoIzquierdo) <= 0) {
+        if (balance < -1 && balanceOptimizado(raiz.izquierdo) <= 0) {
             rotarDerecha();
         }
         // Caso Right Right (RR) - Rotacion simple izquierda  
-        else if (balance > 1 && balanceOptimizado(raiz.hijoDerecho) >= 0) {
+        else if (balance > 1 && balanceOptimizado(raiz.derecho) >= 0) {
             rotarIzquierda();
         }
         // Caso Left Right (LR) - Rotacion doble derecha
-        else if (balance < -1 && balanceOptimizado(raiz.hijoIzquierdo) > 0) {
-            ((AVL)raiz.hijoIzquierdo).rotarIzquierda();
+        else if (balance < -1 && balanceOptimizado(raiz.izquierdo) > 0) {
+            ((AVL)raiz.izquierdo).rotarIzquierda();
             rotarDerecha();
         }
         // Caso Right Left (RL) - Rotacion doble izquierda
-        else if (balance > 1 && balanceOptimizado(raiz.hijoDerecho) < 0) {
-            ((AVL)raiz.hijoDerecho).rotarDerecha();
+        else if (balance > 1 && balanceOptimizado(raiz.derecho) < 0) {
+            ((AVL)raiz.derecho).rotarDerecha();
             rotarIzquierda();
         }
     }
@@ -365,8 +365,8 @@ public class AVL implements ABBTDA {
         }
         
         AVL avlNodo = (AVL) arbol;
-        int alturaIzq = avlNodo.raiz.hijoIzquierdo.estaVacio() ? 0 : ((AVL)avlNodo.raiz.hijoIzquierdo).raiz.altura;
-        int alturaDer = avlNodo.raiz.hijoDerecho.estaVacio() ? 0 : ((AVL)avlNodo.raiz.hijoDerecho).raiz.altura;
+        int alturaIzq = avlNodo.raiz.izquierdo.estaVacio() ? 0 : ((AVL)avlNodo.raiz.izquierdo).raiz.altura;
+        int alturaDer = avlNodo.raiz.derecho.estaVacio() ? 0 : ((AVL)avlNodo.raiz.derecho).raiz.altura;
         
         return alturaDer - alturaIzq;
     }
