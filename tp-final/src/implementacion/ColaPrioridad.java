@@ -38,8 +38,8 @@ public class ColaPrioridad implements ColaPrioridadTDA {
 		 * 		quiere decir que estamos en el limite entre
 		 * 		mayor prioridad <= prioridad insertada <= menor prioridad
 		 * 3. El ultimo caso seria que insertamos justo al final de la cola.
-		 * En ese caso tenemos que asegurarnos que terminamos de recorrer
-		 * los nodos, es decir, el siguiente del actual es nulo
+		 * En ese caso tenemos que asegurarnos que terminamos de recorrer los nodos,
+		 * 		 es decir, el siguiente del actual es nulo
 		 */
 		nodo actual = primero;
 
