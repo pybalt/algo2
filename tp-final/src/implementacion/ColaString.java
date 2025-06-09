@@ -14,27 +14,39 @@ public class ColaString implements ColaStringTDA {
 	
 	@Override
 	public void inicializarCola() {
-
+		primero = null;
+		ultimo = primero;
 	}
 
 	@Override
 	public void acolar(String valor) {
-
+		if(colaVacia()){
+			primero = new nodo();
+			primero.valor = valor.toLowerCase();
+			ultimo = primero;
+		}else{
+			ultimo.siguiente = new nodo();
+			ultimo.siguiente.valor = valor.toLowerCase();
+			ultimo = ultimo.siguiente;
+		}
 	}
 
 	@Override
 	public void desacolar() {
-
+		primero = primero.siguiente;
+		if(primero == null){
+			ultimo = null;
+		}
 	}
 
 	@Override
 	public String primero() {
-		return null;
+		return primero.valor;
 	}
 
 	@Override
 	public boolean colaVacia() {
-		return false;
+		return primero == null;
 	}
 
 }
