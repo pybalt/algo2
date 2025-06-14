@@ -2,9 +2,14 @@ package algoritmos;
 
 import implementacion.ColaString;
 import tdas.ColaPrioridadTDA;
+import tdas.ABBPrecipitacionesTDA;
 
 public class Algoritmos {
+	private ABBPrecipitacionesTDA arbol;
 	
+	public Algoritmos(ABBPrecipitacionesTDA arbol) {
+		this.arbol = arbol;
+	}
 	/**
 	 * Agrega una medicion a un campo determinado, en una fecha determinada
 	 * */
@@ -15,7 +20,7 @@ public class Algoritmos {
 	/**
 	 * Elimina una medicions a un campo determinado, en una fecha determinada
 	 * */
-	public void eliminarMedicion(String campo, int anio, int mes, int dia, int precipitacion) {
+	public void eliminarMedicion(String campo, int anio, int mes, int dia) {
 		
 	}
 	
