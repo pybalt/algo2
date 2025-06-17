@@ -64,13 +64,13 @@ graph TD
             NS2["Day Node Structure:<br/>int clave (day)<br/>int valor (mm)<br/>nodo siguiente"]
         end
         
-        classDef emptyBucket fill:#f9f9f9,stroke:#ccc,stroke-dasharray: 5 5
-        classDef periodNode fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
-        classDef dayNode fill:#fff3e0,stroke:#ff6f00,stroke-width:2px
-        classDef hashFunction fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-        classDef nullPointer fill:#f5f5f5,stroke:#999,stroke-dasharray: 3 3
-        classDef collision fill:#ffebee,stroke:#d32f2f,stroke-width:2px
-        classDef table fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+        classDef emptyBucket fill:#2d3748,stroke:#a0aec0,stroke-dasharray: 5 5,color:#ffffff
+        classDef periodNode fill:#38a169,stroke:#68d391,stroke-width:2px,color:#ffffff
+        classDef dayNode fill:#d69e2e,stroke:#f6e05e,stroke-width:2px,color:#1a202c
+        classDef hashFunction fill:#553c9a,stroke:#9f7aea,stroke-width:2px,color:#ffffff
+        classDef nullPointer fill:#4a5568,stroke:#a0aec0,stroke-dasharray: 3 3,color:#e2e8f0
+        classDef collision fill:#c53030,stroke:#fc8181,stroke-width:2px,color:#ffffff
+        classDef table fill:#2b6cb0,stroke:#63b3ed,stroke-width:2px,color:#ffffff
         
         class B0,B1,B2,B4,B6,B8 emptyBucket
         class P1,P2,P4 periodNode

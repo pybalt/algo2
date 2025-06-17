@@ -71,13 +71,13 @@ graph TD
         B10 --> N3["clave: 42<br/>valor: 300<br/>siguiente: →"]
         N3 --> N4["clave: 58<br/>valor: 400<br/>siguiente: null"]
         
-        %% Style for empty buckets
-        classDef emptyBucket fill:#f9f9f9,stroke:#ccc,stroke-dasharray: 5 5
-        classDef filledBucket fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
-        classDef nodeStyle fill:#fff3e0,stroke:#ff6f00,stroke-width:2px
-        classDef hashFunction fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-        classDef collisionNode fill:#ffebee,stroke:#d32f2f,stroke-width:2px
-        classDef nullPointer fill:#f5f5f5,stroke:#999,stroke-dasharray: 3 3
+        %% Style for empty buckets (Dark mode optimized)
+        classDef emptyBucket fill:#2d3748,stroke:#a0aec0,stroke-dasharray: 5 5,color:#ffffff
+        classDef filledBucket fill:#2b6cb0,stroke:#63b3ed,stroke-width:2px,color:#ffffff
+        classDef nodeStyle fill:#d69e2e,stroke:#f6e05e,stroke-width:2px,color:#1a202c
+        classDef hashFunction fill:#553c9a,stroke:#9f7aea,stroke-width:2px,color:#ffffff
+        classDef collisionNode fill:#c53030,stroke:#fc8181,stroke-width:2px,color:#ffffff
+        classDef nullPointer fill:#4a5568,stroke:#a0aec0,stroke-dasharray: 3 3,color:#e2e8f0
         
         class B0,B1,B3,B4,B5,B6,B8,B9,B11,B12,B13,B14,B15 emptyBucket
         class B2,B7,B10 filledBucket
