@@ -50,8 +50,8 @@ public class Algoritmos {
 	/**
 	 * Devuelve el numero de mes donde mas llovio entre todos los meses de todos los años de cualquier campo
 	 * */
-	public ColaPrioridadTDA mesMasLluvioso() {
-		return null;
+	public int mesMasLluvioso() {
+		return 0;
 	}
 	
 	/**
