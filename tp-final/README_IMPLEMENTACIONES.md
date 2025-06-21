@@ -15,6 +15,7 @@
 El sistema implementa una estructura de datos jerárquica para almacenar y consultar precipitaciones en campos agrícolas organizados por períodos temporales.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph TB
     A[ArbolPrecipitaciones<br/>ABB de Campos] --> B[Campo Norte]
     A --> C[Campo Centro] 
@@ -31,9 +32,12 @@ graph TB
     H --> K[Día 20: 30mm]
     I --> L[Día 5: 15mm]
     
-    style A fill:#e1f5fe
-    style E fill:#f3e5f5
-    style H fill:#e8f5e8
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:3px,color:#fff
+    style E fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style H fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style B fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style C fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style D fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
 ```
 
 ---
@@ -45,6 +49,7 @@ graph TB
 La clase `ArbolPrecipitaciones` implementa un **Árbol Binario de Búsqueda (ABB)** donde cada nodo representa un campo agrícola.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph TD
     subgraph "Nodo del ABB"
         A[String campo<br/>Campo Norte]
@@ -58,16 +63,17 @@ graph TD
     C --> G[Campos menores lexicográficamente]
     D --> H[Campos mayores lexicográficamente]
     
-    style A fill:#ffcdd2
-    style B fill:#c8e6c9
-    style C fill:#fff3e0
-    style D fill:#fff3e0
+    style A fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style B fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style C fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style D fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
 ```
 
 ### Operaciones Principales
 
 #### 1. Agregar Campo
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TD
     A[agregar campo] --> B{¿Árbol vacío?}
     B -->|Sí| C[Crear raíz con campo]
@@ -79,6 +85,12 @@ flowchart TD
     
     C --> I[Inicializar diccionarios]
     C --> J[Crear hijos vacíos]
+    
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style E fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style G fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style H fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
 ```
 
 #### 2. Agregar Medición
