@@ -1,8 +1,9 @@
 package implementacion;
 
 import tdas.ConjuntoTDA;
+import tdas.DiccionarioSimpleTDA;
 
-public class DiccionarioSimple implements tdas.DiccionarioSimpleTDA {
+public class DiccionarioSimple implements DiccionarioSimpleTDA {
 
 	class nodo{
 		int clave;

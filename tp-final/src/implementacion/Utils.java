@@ -20,12 +20,20 @@ class Utils {
         private static boolean esBisiesto(int anio) {
             return (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
         }
+
+        private static String anioActual(){
+            return String.valueOf(java.time.Year.now().getValue());
+        }
     }
 
     static class Periodo { 
 
         static String periodo(int anio, int mes) {
             return String.valueOf(anio) + String.format("%02d", mes);
+        }
+
+        static String periodo(String anio, String mes){
+            return anio + String.format("%02d", Integer.parseInt(mes));
         }
         
         static int[] descomponerPeriodo(String periodo) {

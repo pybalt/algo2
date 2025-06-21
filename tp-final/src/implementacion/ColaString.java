@@ -33,6 +33,9 @@ public class ColaString implements ColaStringTDA {
 
 	@Override
 	public void desacolar() {
+		if(primero == null){
+			return;
+		}
 		primero = primero.siguiente;
 		if(primero == null){
 			ultimo = null;
