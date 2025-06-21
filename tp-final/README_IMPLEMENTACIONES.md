@@ -169,14 +169,18 @@ graph LR
 
 #### Función Hash para Strings
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart LR
     A[Período 202401] --> B[periodo.hashCode]
     B --> C[Math.abs resultado]
     C --> D[resultado mod capacidad]
     D --> E[Índice del bucket]
     
-    style A fill:#fff3e0
-    style E fill:#e8f5e8
+    style A fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style B fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style C fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style E fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 ### DiccionarioSimple
@@ -184,6 +188,7 @@ flowchart LR
 Hash Table que mapea días (int) a precipitaciones (int).
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph TB
     subgraph "DiccionarioSimple - Precipitaciones Diarias"
         A[Bucket 0] --> B[Día 16: 30mm]
@@ -192,13 +197,23 @@ graph TB
         G[Bucket 3] --> H[Día 5: 15mm]
     end
     
-    B --> I[Hash: abs 16 % 16 = 0]
-    F --> J[Hash: abs 15 % 16 = 15]
-    H --> K[Hash: abs 5 % 16 = 5]
+    B --> I[Hash: abs 16 mod 16 = 0]
+    F --> J[Hash: abs 15 mod 16 = 15]
+    H --> K[Hash: abs 5 mod 16 = 5]
+    
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style E fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style G fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style B fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style D fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style F fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style H fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 #### Redimensionamiento Automático
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TD
     A[Agregar elemento] --> B{size >= capacidad * 0.75?}
     B -->|No| C[Insertar normalmente]
@@ -208,6 +223,14 @@ flowchart TD
     E --> F[Crear nuevo array]
     F --> G[Rehash todos los elementos<br/>con nueva capacidad]
     G --> H[Insertar elemento]
+    
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style D fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style E fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style F fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style G fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style H fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 ### ColaPrioridad
@@ -215,19 +238,23 @@ flowchart TD
 Lista enlazada ordenada por prioridad (días cronológicos).
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph LR
     A[primero] --> B[día: 5<br/>precipitación: 15mm]
     B --> C[día: 15<br/>precipitación: 25mm]
     C --> D[día: 20<br/>precipitación: 30mm]
     D --> E[null]
     
-    style B fill:#c8e6c9
-    style C fill:#c8e6c9  
-    style D fill:#c8e6c9
+    style A fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style B fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style C fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style D fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style E fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
 ```
 
 #### Inserción Ordenada
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TD
     A[acolarPrioridad día, precipitación] --> B{¿Cola vacía O día < primero?}
     B -->|Sí| C[Insertar al inicio]
@@ -235,6 +262,12 @@ flowchart TD
     
     D --> E[Recorrer hasta encontrar<br/>posición donde día <= siguiente.día]
     E --> F[Insertar en posición encontrada]
+    
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style D fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style E fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style F fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 ### ColaString
@@ -242,6 +275,7 @@ flowchart TD
 Cola FIFO para períodos con conversión automática a minúsculas.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph LR
     A[primero] --> B[202401]
     B --> C[202402] 
@@ -249,9 +283,12 @@ graph LR
     D --> E[null]
     F[ultimo] --> D
     
-    style B fill:#fff3e0
-    style C fill:#fff3e0
-    style D fill:#fff3e0
+    style A fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style B fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style C fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style D fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style E fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style F fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
 ```
 
 ### Conjuntos (Conjunto y ConjuntoString)
@@ -259,6 +296,7 @@ graph LR
 Listas enlazadas sin duplicados con selección aleatoria.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph TB
     subgraph "ConjuntoString"
         A[primero] --> B[Campo Norte]
@@ -271,9 +309,13 @@ graph TB
     G --> H[Navegar hasta posición aleatoria]
     H --> I[Retornar elemento]
     
-    style B fill:#e1f5fe
-    style C fill:#e1f5fe
-    style D fill:#e1f5fe
+    style A fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style B fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style D fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style E fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style F fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style I fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 ---
@@ -285,6 +327,7 @@ graph TB
 Validación completa de fechas con soporte para años bisiestos.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TD
     A[fechaValida año, mes, día] --> B{¿1900 ≤ año ≤ 2100?}
     B -->|No| C[false]
@@ -298,21 +341,30 @@ flowchart TD
     G --> H{¿Febrero + año bisiesto?}
     H -->|Sí| I[29 días]
     H -->|No| J[Días normales del mes]
+    
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style F fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style G fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style I fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style J fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
 ```
 
 #### Algoritmo Año Bisiesto
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TD
-    A[esBisiesto año] --> B{¿año % 4 == 0?}
+    A[esBisiesto año] --> B{¿año mod 4 == 0?}
     B -->|No| C[false]
-    B -->|Sí| D{¿año % 100 == 0?}
+    B -->|Sí| D{¿año mod 100 == 0?}
     D -->|No| E[true]
-    D -->|Sí| F{¿año % 400 == 0?}
+    D -->|Sí| F{¿año mod 400 == 0?}
     F -->|Sí| E
     F -->|No| C
     
-    style E fill:#c8e6c9
-    style C fill:#ffcdd2
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style E fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style C fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
 ```
 
 ### Utils.Periodo
@@ -320,14 +372,18 @@ flowchart TD
 Generación de períodos en formato AAAAMM.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart LR
     A[año: 2024<br/>mes: 3] --> B[String.valueOf año]
     B --> C[String.format 02d mes]
     C --> D[2024 + 03]
     D --> E[202403]
     
-    style A fill:#fff3e0
-    style E fill:#e8f5e8
+    style A fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style B fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style C fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style E fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 ---
@@ -336,6 +392,7 @@ flowchart LR
 
 ### Inserción de Medición Completa
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 sequenceDiagram
     participant C as Cliente
     participant A as ArbolPrecipitaciones
@@ -356,6 +413,7 @@ sequenceDiagram
 
 ### Consulta de Períodos
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 sequenceDiagram
     participant C as Cliente
     participant A as ArbolPrecipitaciones
@@ -411,6 +469,7 @@ sequenceDiagram
 ### Análisis de Memoria
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph TB
     A[Memoria Total] --> B[ABB Campos<br/>O log n]
     A --> C[Hash Tables Períodos<br/>O m * log p]
@@ -422,11 +481,11 @@ graph TB
     D --> H[d = días promedio por período]
     E --> I[Colas y conjuntos temporales]
     
-    style A fill:#ffcdd2
-    style B fill:#c8e6c9
-    style C fill:#fff3e0
-    style D fill:#e1f5fe
-    style E fill:#f3e5f5
+    style A fill:#dc2626,stroke:#ef4444,stroke-width:3px,color:#fff
+    style B fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style C fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style D fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style E fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
 ```
 
 **Donde:**
