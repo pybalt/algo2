@@ -47,7 +47,7 @@ La clase `ArbolPrecipitaciones` implementa un **Árbol Binario de Búsqueda (ABB
 ```mermaid
 graph TD
     subgraph "Nodo del ABB"
-        A[String campo<br/>"Campo Norte"]
+        A[String campo<br/>Campo Norte]
         B[DiccionarioSimpleStringTDA<br/>mensualPrecipitaciones]
         C[ABBPrecipitacionesTDA<br/>hijoIzquierdo]
         D[ABBPrecipitacionesTDA<br/>hijoDerecho]
@@ -126,9 +126,9 @@ graph LR
         G[Bucket 3] --> H[202402 → DiccionarioSimple]
     end
     
-    B --> I[Hash: abs("202401".hashCode) % 16]
-    D --> J[Hash: abs("202403".hashCode) % 16]
-    H --> K[Hash: abs("202402".hashCode) % 16]
+    B --> I[Hash: abs 202401 hashCode mod 16]
+    D --> J[Hash: abs 202403 hashCode mod 16]
+    H --> K[Hash: abs 202402 hashCode mod 16]
     
     style A fill:#e3f2fd
     style C fill:#e3f2fd
@@ -139,9 +139,9 @@ graph LR
 #### Función Hash para Strings
 ```mermaid
 flowchart LR
-    A[Período "202401"] --> B[periodo.hashCode]
+    A[Período 202401] --> B[periodo.hashCode]
     B --> C[Math.abs resultado]
-    C --> D[resultado % capacidad]
+    C --> D[resultado mod capacidad]
     D --> E[Índice del bucket]
     
     style A fill:#fff3e0
@@ -212,9 +212,9 @@ Cola FIFO para períodos con conversión automática a minúsculas.
 
 ```mermaid
 graph LR
-    A[primero] --> B["202401"]
-    B --> C["202402"] 
-    C --> D["202403"]
+    A[primero] --> B[202401]
+    B --> C[202402] 
+    C --> D[202403]
     D --> E[null]
     F[ultimo] --> D
     
@@ -230,9 +230,9 @@ Listas enlazadas sin duplicados con selección aleatoria.
 ```mermaid
 graph TB
     subgraph "ConjuntoString"
-        A[primero] --> B["Campo Norte"]
-        B --> C["Campo Sur"]
-        C --> D["Campo Este"]
+        A[primero] --> B[Campo Norte]
+        B --> C[Campo Sur]
+        C --> D[Campo Este]
         D --> E[null]
     end
     
@@ -291,9 +291,9 @@ Generación de períodos en formato AAAAMM.
 ```mermaid
 flowchart LR
     A[año: 2024<br/>mes: 3] --> B[String.valueOf año]
-    B --> C[String.format "%02d" mes]
-    C --> D["2024" + "03"]
-    D --> E["202403"]
+    B --> C[String.format 02d mes]
+    C --> D[2024 + 03]
+    D --> E[202403]
     
     style A fill:#fff3e0
     style E fill:#e8f5e8
@@ -312,11 +312,11 @@ sequenceDiagram
     participant D as DiccionarioSimpleString
     participant DS as DiccionarioSimple
     
-    C->>A: agregarMedicion("Campo Norte", "2024", "03", 15, 25)
+    C->>A: agregarMedicion(Campo Norte, 2024, 03, 15, 25)
     A->>U: fechaValida(2024, 3, 15)
     U-->>A: true
-    A->>A: buscar("Campo Norte")
-    A->>D: agregar("202403", 15, 25)
+    A->>A: buscar(Campo Norte)
+    A->>D: agregar(202403, 15, 25)
     D->>DS: agregar(15, 25)
     DS-->>D: ✓ Agregado
     D-->>A: ✓ Período actualizado
