@@ -95,6 +95,7 @@ flowchart TD
 
 #### 2. Agregar Medición
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TD
     A[agregarMedicion] --> B[Validar fecha<br/>Utils.Fecha.fechaValida]
     B -->|Inválida| C[Ignorar medición]
@@ -104,10 +105,18 @@ flowchart TD
     E -->|Existe| G[Agregar al diccionario<br/>del campo]
     
     G --> H[DiccionarioSimpleString<br/>agregar período, día, precipitación]
+    
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style B fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style C fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style D fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style G fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style H fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
 ```
 
 #### 3. Obtener Períodos
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 flowchart TD
     A[periodos] --> B[Crear ColaString resultado]
     A --> C[Crear ConjuntoString únicos]
@@ -119,6 +128,12 @@ flowchart TD
     
     G --> H[Transferir conjunto → cola]
     H --> I[Retornar cola de períodos]
+    
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style B fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style C fill:#7c3aed,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D fill:#d97706,stroke:#f59e0b,stroke-width:2px,color:#fff
+    style I fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 ---
@@ -130,6 +145,7 @@ flowchart TD
 Implementa un **Hash Table** que mapea períodos (strings) a diccionarios de precipitaciones diarias.
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 graph LR
     subgraph "Hash Table - DiccionarioSimpleString"
         A[Bucket 0] --> B[202401 → DiccionarioSimple]
@@ -142,10 +158,13 @@ graph LR
     D --> J[Hash: abs 202403 hashCode mod 16]
     H --> K[Hash: abs 202402 hashCode mod 16]
     
-    style A fill:#e3f2fd
-    style C fill:#e3f2fd
-    style E fill:#ffebee
-    style G fill:#e3f2fd
+    style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style C fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style E fill:#dc2626,stroke:#ef4444,stroke-width:2px,color:#fff
+    style G fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    style B fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style D fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
+    style H fill:#059669,stroke:#10b981,stroke-width:2px,color:#fff
 ```
 
 #### Función Hash para Strings
