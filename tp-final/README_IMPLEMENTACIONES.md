@@ -79,12 +79,12 @@ graph TD
 ```mermaid
 %%{init: {'theme':'dark'}}%%
 flowchart TD
-    A["agregar(campo)"] --> B{¿raiz == null?}
-    B -->|Sí| C["Crear raíz<br/>Inicializar diccionario<br/>Crear hijos vacíos"]
-    B -->|No| D{¿esMayor(raiz, campo)?}
-    D -->|Sí| E["hijoDerecho.agregar(campo)"]
-    D -->|No| F{¿esMenor(raiz, campo)?}
-    F -->|Sí| G["hijoIzquierdo.agregar(campo)"]
+    A["agregar(campo)"] --> B{"raiz == null?"}
+    B -->|Si| C["Crear raíz<br/>Inicializar diccionario<br/>Crear hijos vacíos"]
+    B -->|No| D{"esMayor(raiz, campo)?"}
+    D -->|Si| E["hijoDerecho.agregar(campo)"]
+    D -->|No| F{"esMenor(raiz, campo)?"}
+    F -->|Si| G["hijoIzquierdo.agregar(campo)"]
     F -->|No| H["Campo duplicado - ignorar"]
     
     style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
@@ -116,12 +116,12 @@ flowchart TD
 ```mermaid
 %%{init: {'theme':'dark'}}%%
 flowchart TD
-    A["eliminar(campo)"] --> B{¿Es hoja?}
-    B -->|Sí| C["raiz = null"]
-    B -->|No| D{¿Solo hijo izquierdo?}
-    D -->|Sí| E["Reemplazar con mayor del subárbol izquierdo"]
-    D -->|No| F{¿Solo hijo derecho?}
-    F -->|Sí| G["Reemplazar con menor del subárbol derecho"]
+    A["eliminar(campo)"] --> B{"Es hoja?"}
+    B -->|Si| C["raiz = null"]
+    B -->|No| D{"Solo hijo izquierdo?"}
+    D -->|Si| E["Reemplazar con mayor del subárbol izquierdo"]
+    D -->|No| F{"Solo hijo derecho?"}
+    F -->|Si| G["Reemplazar con menor del subárbol derecho"]
     F -->|No| H["Reemplazar con mayor del subárbol izquierdo<br/>Transferir mensualPrecipitaciones"]
     
     style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
@@ -259,8 +259,8 @@ graph LR
 ```mermaid
 %%{init: {'theme':'dark'}}%%
 flowchart TD
-    A["acolarPrioridad(valor, prioridad)"] --> B{¿Cola vacía O prioridad < primero.prioridad?}
-    B -->|Sí| C["Insertar al principio"]
+    A["acolarPrioridad(valor, prioridad)"] --> B{"Cola vacía O prioridad < primero.prioridad?"}
+    B -->|Si| C["Insertar al principio"]
     B -->|No| D["Buscar posición correcta"]
     
     D --> E["while (actual.siguiente != null &&<br/>actual.siguiente.prioridad <= prioridad)"]
@@ -344,17 +344,17 @@ do {
 ```mermaid
 %%{init: {'theme':'dark'}}%%
 flowchart TD
-    A["fechaValida(año, mes, día)"] --> B{¿1900 ≤ año ≤ 2100?}
+    A["fechaValida(año, mes, día)"] --> B{"1900 <= año <= 2100?"}
     B -->|No| C["false"]
-    B -->|Sí| D{¿1 ≤ mes ≤ 12?}
+    B -->|Si| D{"1 <= mes <= 12?"}
     D -->|No| C
-    D -->|Sí| E{¿1 ≤ día ≤ diasEnMes(año, mes)?}
+    D -->|Si| E{"1 <= día <= diasEnMes(año, mes)?"}
     E -->|No| C
-    E -->|Sí| F["true"]
+    E -->|Si| F["true"]
     
     E --> G["diasEnMes() considera años bisiestos"]
-    G --> H{¿mes == 2 && esBisiesto(año)?}
-    H -->|Sí| I["29 días"]
+    G --> H{"mes == 2 && esBisiesto(año)?"}
+    H -->|Si| I["29 días"]
     H -->|No| J["diasMes[mes-1]"]
     
     style A fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
