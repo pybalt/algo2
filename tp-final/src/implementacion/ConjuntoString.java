@@ -10,71 +10,137 @@ public class ConjuntoString implements ConjuntoStringTDA {
 		nodo siguiente;
 	}
 	
-	private nodo primero;
-	private int cantidad;
+	private nodo[] buckets;
+	private int capacidad;
+	private int size;
 	private Random r;
+	private static final int CAPACIDAD_INICIAL = 16;
+	private static final double FACTOR_CARGA = 0.85;
 	
 	@Override
 	public void inicializar() {
-		primero = null;
-		cantidad = 0;
+		capacidad = CAPACIDAD_INICIAL;
+		buckets = new nodo[capacidad];
+		size = 0;
 		r = new Random();
+	}
+	
+	private int hash(String valor) {
+		if (valor == null) return 0;
+		return Math.abs(valor.hashCode()) % capacidad;
+	}
+	
+	private void redimensionar() {
+		if (size >= capacidad * FACTOR_CARGA) {
+			nodo[] viejosBuckets = buckets;
+			int viejaCapacidad = capacidad;
+			
+			capacidad *= 2;
+			buckets = new nodo[capacidad];
+			size = 0;
+			
+			// Reinsertar todos los elementos recorriendo las cadenas
+			for (int i = 0; i < viejaCapacidad; i++) {
+				nodo actual = viejosBuckets[i];
+				while (actual != null) {
+					agregarSinRedimensionar(actual.valor);
+					actual = actual.siguiente;
+				}
+			}
+		}
+	}
+	
+	private void agregarSinRedimensionar(String valor) {
+		int indice = hash(valor);
+		
+		nodo actual = buckets[indice];
+		while (actual != null) {
+			if (actual.valor.equals(valor)) {
+				return; // Ya existe - Ignoramos
+			}
+			actual = actual.siguiente;  // Mismo hash, manejamos colisiones.
+		}
+		
+		nodo nuevo = new nodo();
+		nuevo.valor = valor;
+		nuevo.siguiente = buckets[indice];
+		buckets[indice] = nuevo;
+		size++;
 	}
 
 	@Override
 	public void agregar(String valor) {
-		if(!pertenece(valor)){
-			nodo nuevoNodo = new nodo();
-			nuevoNodo.valor = valor;
-			nuevoNodo.siguiente = primero;
-			primero = nuevoNodo;
-			cantidad++;
-		}
+		redimensionar();
+		agregarSinRedimensionar(valor);
 	}
 
 	@Override
 	public boolean pertenece(String valor) {
-		nodo actual = primero;
-		while(actual != null){
-			if(actual.valor.equals(valor)){
+		int indice = hash(valor);
+		
+		nodo actual = buckets[indice];
+		// Accedemos a la posicion donde deberia estar
+		// y verificamos que efectivamente esté
+		while (actual != null) {
+			if (actual.valor.equals(valor)) {
 				return true;
 			}
 			actual = actual.siguiente;
 		}
+		
 		return false;
 	}
 	@Override
 	public String elegir() {
-		int qty = r.nextInt(cantidad);
-		nodo actual = primero;
-		for (int i = 0; i < qty; i++) {
+		if (estaVacio()) return null;
+		
+		int indice;
+		do {
+			indice = r.nextInt(capacidad);
+		} while (buckets[indice] == null);
+		
+		// ¿Y si hay una colision? 
+		// Tendriamos que ademas elegir aleatoriamente dentro de las colisiones
+		nodo actual = buckets[indice];
+		int longitud = 1;
+		nodo temp = actual.siguiente;
+		while (temp != null) {
+			longitud++;
+			temp = temp.siguiente;
+		}
+		
+		int posicion = r.nextInt(longitud);
+		for (int i = 0; i < posicion; i++) {
 			actual = actual.siguiente;
 		}
+		
 		return actual.valor;
 	}
 
 	@Override
 	public boolean estaVacio() {
-		return primero == null;
+		return size == 0;
 	}
 
 	@Override
 	public void sacar(String valor) {
-		if(primero == null){
+		int indice = hash(valor);
+		
+		if (buckets[indice] == null) return;
+		
+		// Caso 1: Primer elemento de la cadena
+		if (buckets[indice].valor.equals(valor)) {
+			buckets[indice] = buckets[indice].siguiente;
+			size--;
 			return;
 		}
-		// Caso 1. El primero es el valor
-		if(primero.valor.equals(valor)){
-			primero = primero.siguiente;
-			cantidad --;
-			return;
-		}
-		// Caso 2. El primero no es el valor.
-		nodo actual = primero;
-		while(actual.siguiente != null){
-			if(actual.siguiente.valor.equals(valor)){
+		
+		// Caso 2: Elemento en NO es el primero de la cadena
+		nodo actual = buckets[indice];
+		while (actual.siguiente != null) {
+			if (actual.siguiente.valor.equals(valor)) {
 				actual.siguiente = actual.siguiente.siguiente;
-				cantidad--;
+				size--;
 				return;
 			}
 			actual = actual.siguiente;
