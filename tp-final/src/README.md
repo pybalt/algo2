@@ -165,9 +165,6 @@ src/
 │   ├── ColaStringTDA.java
 │   ├── ConjuntoTDA.java
 │   └── ConjuntoStringTDA.java
-├── run_all_tests.sh              # Script de ejecución
-├── run_tests.sh                  # Script de tests
-└── run_validation_tests.sh       # Script de validación
 ```
 
 ## Casos de Uso
@@ -216,14 +213,6 @@ System.out.println("Campo más lluvioso: " + campoTop);
 - **Hash tables anidados**: Acceso eficiente a datos temporales
 - **Factor de carga diferenciado**: 0.75 para diccionarios, 0.85 para conjuntos
 - **Validación temprana**: Fechas inválidas se rechazan inmediatamente
-
-## Contribución
-
-Para contribuir al proyecto:
-1. Mantener la separación TDA → Implementación → Algoritmos
-2. Documentar nuevas funciones con complejidad temporal
-3. Incluir tests para nuevas funcionalidades
-4. Seguir las convenciones de nomenclatura existentes
 
 ---
 
