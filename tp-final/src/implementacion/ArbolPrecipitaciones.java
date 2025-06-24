@@ -35,11 +35,11 @@ public class ArbolPrecipitaciones implements ABBPrecipitacionesTDA {
 			raiz.hijoIzquierdo.inicializar();
 			raiz.mensualPrecipitaciones = new DiccionarioSimpleString();
 			raiz.mensualPrecipitaciones.inicializarDiccionario();
-		}else if(esMayor(raiz(), valor)){
-			raiz.hijoDerecho.agregar(valor);
-		}
-		else if(esMenor(raiz(), valor)){
+		}else if(esMenor(valor, raiz())){
 			raiz.hijoIzquierdo.agregar(valor);
+		}
+		else if(esMayor(valor, raiz())){
+			raiz.hijoDerecho.agregar(valor);
 		}
 	}
 
@@ -52,6 +52,10 @@ public class ArbolPrecipitaciones implements ABBPrecipitacionesTDA {
 
 		nodoArbol nodo = buscar(raiz, valor);
 		if(nodo != null){
+			nodo.mensualPrecipitaciones.agregar(periodo, dia, precipitacion);
+		}else{
+			agregar(valor);
+			nodo = buscar(raiz, valor);
 			nodo.mensualPrecipitaciones.agregar(periodo, dia, precipitacion);
 		}
 	}
@@ -197,17 +201,66 @@ public class ArbolPrecipitaciones implements ABBPrecipitacionesTDA {
 		ColaPrioridad resultado = new ColaPrioridad();
 		resultado.inicializarCola();
 		
-		if(raiz != null && raiz.mensualPrecipitaciones.claves().pertenece(periodo)){
-			DiccionarioSimpleTDA precipitaciones = raiz.mensualPrecipitaciones.recuperar(periodo);
-			ConjuntoTDA diasMes = precipitaciones.obtenerClaves();
-			while(!diasMes.estaVacio()){
-				int dia = diasMes.elegir();
-				resultado.acolarPrioridad(precipitaciones.recuperar(dia), dia);
-				diasMes.sacar(dia);
-			}
+		// Usar un diccionario para acumular precipitaciones por día
+		DiccionarioSimple acumuladorDias = new DiccionarioSimple();
+		acumuladorDias.inicializar();
+		DiccionarioSimple contadorCampos = new DiccionarioSimple();
+		contadorCampos.inicializar();
+		
+		// Recopilar precipitaciones de todo el árbol
+		recopilarPrecipitacionesPeriodo(raiz, periodo, acumuladorDias, contadorCampos);
+		
+		// Calcular promedios y armar la cola resultado
+		ConjuntoTDA dias = acumuladorDias.obtenerClaves();
+		while(!dias.estaVacio()){
+			int dia = dias.elegir();
+			int totalPrecipitacion = acumuladorDias.recuperar(dia);
+			int cantidadCampos = contadorCampos.recuperar(dia);
+			int promedio = cantidadCampos > 0 ? totalPrecipitacion / cantidadCampos : 0;
+			resultado.acolarPrioridad(promedio, dia);
+			dias.sacar(dia);
 		}
 		
 		return resultado;
+	}
+	
+	private void recopilarPrecipitacionesPeriodo(nodoArbol nodo, String periodo, 
+												DiccionarioSimpleTDA acumulador, 
+												DiccionarioSimpleTDA contador) {
+		if(nodo == null) return;
+		
+		// Procesar nodo actual
+		if(nodo.mensualPrecipitaciones.claves().pertenece(periodo)) {
+			DiccionarioSimpleTDA precipitacionesNodo = nodo.mensualPrecipitaciones.recuperar(periodo);
+			ConjuntoTDA dias = precipitacionesNodo.obtenerClaves();
+			
+			while(!dias.estaVacio()) {
+				int dia = dias.elegir();
+				int precipitacion = precipitacionesNodo.recuperar(dia);
+				
+				// Acumular precipitación
+				if(acumulador.obtenerClaves().pertenece(dia)) {
+					int actual = acumulador.recuperar(dia);
+					acumulador.agregar(dia, actual + precipitacion);
+				} else {
+					acumulador.agregar(dia, precipitacion);
+				}
+				
+				// Contar campos
+				if(contador.obtenerClaves().pertenece(dia)) {
+					int actualCount = contador.recuperar(dia);
+					contador.agregar(dia, actualCount + 1);
+				} else {
+					contador.agregar(dia, 1);
+				}
+				
+				dias.sacar(dia);
+			}
+		}
+		
+		// Recursión en subárboles
+		recopilarPrecipitacionesPeriodo(((ArbolPrecipitaciones)nodo.hijoIzquierdo).raiz, periodo, acumulador, contador);
+		recopilarPrecipitacionesPeriodo(((ArbolPrecipitaciones)nodo.hijoDerecho).raiz, periodo, acumulador, contador);
 	}
 	
 	@Override
