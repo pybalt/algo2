@@ -59,19 +59,36 @@ public class ArbolPrecipitaciones implements ABBPrecipitacionesTDA {
 			nodo.mensualPrecipitaciones.agregar(periodo, dia, precipitacion);
 		}
 	}
-	private nodoArbol buscar(nodoArbol nodo, String campo){
-		if(nodo == null){
-			return null;
+
+	@Override
+	public ColaStringTDA periodos() {
+		ColaStringTDA resultado = new ColaString();
+		resultado.inicializarCola();
+
+		ConjuntoStringTDA periodosUnicos = new ConjuntoString();
+		periodosUnicos.inicializar();
+
+		recolectarPeriodos(raiz, periodosUnicos);
+		while(!periodosUnicos.estaVacio()){
+			String periodo = periodosUnicos.elegir();
+			resultado.acolar(periodo);
+			periodosUnicos.sacar(periodo);
 		}
-		if(nodo.campo.equals(campo)){
-			return nodo;
-		}else if(esMenor(campo, nodo.campo)){
-			return buscar(((ArbolPrecipitaciones)nodo.hijoIzquierdo).raiz, campo);
-		}else if(esMayor(campo, nodo.campo)){
-			return buscar(((ArbolPrecipitaciones)nodo.hijoDerecho).raiz, campo);
-		}
-		return null;
+		return resultado;
 	}
+
+	@Override
+	public void eliminarMedicion(String valor, String anio, String mes, int dia) {
+		String periodo = Utils.Periodo.periodo(anio, mes);
+		nodoArbol nodo = buscar(raiz, valor);
+		if(nodo == null){
+			return;
+		}
+		if (nodo.mensualPrecipitaciones.claves().pertenece(periodo)){
+			nodo.mensualPrecipitaciones.recuperar(periodo).eliminar(dia);
+		}
+	}
+	
 	@Override
 	public void eliminar(String valor) {
 		// Caso 1. El nodo a eliminar es la raiz y es una hoja
@@ -125,55 +142,63 @@ public class ArbolPrecipitaciones implements ABBPrecipitacionesTDA {
 			raiz.hijoDerecho.eliminar(valor);
 		}
 	}
-	private nodoArbol obtenerNodo(ABBPrecipitacionesTDA arbol){
-		return ((ArbolPrecipitaciones)arbol).raiz;
-	}
-    private ABBPrecipitacionesTDA menor(ABBPrecipitacionesTDA arbol){
-        if(arbol.hijoIzq().arbolVacio()){
-            return arbol;
-        }else{
-            return menor(arbol.hijoIzq());
-        }
-    }
-    private ABBPrecipitacionesTDA mayor(ABBPrecipitacionesTDA arbol){
-        if(arbol.hijoDer().arbolVacio()){
-            return arbol;
-        }else{
-            return mayor(arbol.hijoDer());
-        }
-    }
+	
 	@Override
 	public String raiz() {
 		return raiz.campo;
 	}
 	
 	@Override
-	public void eliminarMedicion(String valor, String anio, String mes, int dia) {
-		String periodo = Utils.Periodo.periodo(anio, mes);
-		nodoArbol nodo = buscar(raiz, valor);
-		if(nodo == null){
-			return;
+	public ColaPrioridadTDA precipitaciones(String periodo) {
+		ColaPrioridad resultado = new ColaPrioridad();
+		resultado.inicializarCola();
+		
+		if(raiz != null && raiz.mensualPrecipitaciones.claves().pertenece(periodo)){
+			DiccionarioSimpleTDA precipitacionesNodo = raiz.mensualPrecipitaciones.recuperar(periodo);
+			ConjuntoTDA dias = precipitacionesNodo.obtenerClaves();
+			
+			while(!dias.estaVacio()){
+				int dia = dias.elegir();
+				int precipitacion = precipitacionesNodo.recuperar(dia);
+				resultado.acolarPrioridad(precipitacion, dia);
+				dias.sacar(dia);
+			}
 		}
-		if (nodo.mensualPrecipitaciones.claves().pertenece(periodo)){
-			nodo.mensualPrecipitaciones.recuperar(periodo).eliminar(dia);
-		}
+		
+		return resultado;
+	}
+	
+	@Override
+	public ABBPrecipitacionesTDA hijoIzq() {
+		return raiz.hijoIzquierdo;
+	}
+	
+	@Override
+	public ABBPrecipitacionesTDA hijoDer() {
+		return raiz.hijoDerecho;
+	}
+	
+	@Override
+	public boolean arbolVacio() {
+		return raiz == null;
 	}
 
-	@Override
-	public ColaStringTDA periodos() {
-		ColaStringTDA resultado = new ColaString();
-		resultado.inicializarCola();
-
-		ConjuntoStringTDA periodosUnicos = new ConjuntoString();
-		periodosUnicos.inicializar();
-
-		recolectarPeriodos(raiz, periodosUnicos);
-		while(!periodosUnicos.estaVacio()){
-			String periodo = periodosUnicos.elegir();
-			resultado.acolar(periodo);
-			periodosUnicos.sacar(periodo);
+	private nodoArbol obtenerNodo(ABBPrecipitacionesTDA arbol){
+		return ((ArbolPrecipitaciones)arbol).raiz;
+	}
+	private ABBPrecipitacionesTDA menor(ABBPrecipitacionesTDA arbol){
+		if(arbol.hijoIzq().arbolVacio()){
+			return arbol;
+		}else{
+			return menor(arbol.hijoIzq());
 		}
-		return resultado;
+	}
+	private ABBPrecipitacionesTDA mayor(ABBPrecipitacionesTDA arbol){
+		if(arbol.hijoDer().arbolVacio()){
+			return arbol;
+		}else{
+			return mayor(arbol.hijoDer());
+		}
 	}
 	private void recolectarPeriodos(nodoArbol nodo, ConjuntoStringTDA periodos){
 		if(nodo!=null){
@@ -196,52 +221,29 @@ public class ArbolPrecipitaciones implements ABBPrecipitacionesTDA {
 			recolectarPeriodos(((ArbolPrecipitaciones)nodo.hijoDerecho).raiz, periodos);
 		}
 	}
-	@Override
-	public ColaPrioridadTDA precipitaciones(String periodo) {
-		ColaPrioridad resultado = new ColaPrioridad();
-		resultado.inicializarCola();
-
-		if(raiz != null && raiz.mensualPrecipitaciones.claves().pertenece(periodo)){
-			DiccionarioSimpleTDA precipitacionesNodo = raiz.mensualPrecipitaciones.recuperar(periodo);
-			ConjuntoTDA dias = precipitacionesNodo.obtenerClaves();
-			
-			while(!dias.estaVacio()){
-				int dia = dias.elegir();
-				int precipitacion = precipitacionesNodo.recuperar(dia);
-				resultado.acolarPrioridad(precipitacion, dia);
-				dias.sacar(dia);
-			}
-		}
-		
-		return resultado;
-	}
-	
-	@Override
-	public ABBPrecipitacionesTDA hijoIzq() {
-		return raiz.hijoIzquierdo;
-	}
-
-	@Override
-	public ABBPrecipitacionesTDA hijoDer() {
-		return raiz.hijoDerecho;
-	}
-
-	@Override
-	public boolean arbolVacio() {
-		return raiz == null;
-	}
-	
 	/**
 	 * Determina si el primer valor es menor que el segundo valor
 	 * */
 	private boolean esMenor(String v1, String v2) {
 		return v1.compareToIgnoreCase(v2) < 0;
 	}
-	
 	/**
 	 * Determina si el primer valor es mayor que el segundo valor
 	 * */
 	private boolean esMayor(String v1, String v2) {
 		return v1.compareToIgnoreCase(v2) > 0;
+	}
+	private nodoArbol buscar(nodoArbol nodo, String campo){
+		if(nodo == null){
+			return null;
+		}
+		if(nodo.campo.equals(campo)){
+			return nodo;
+		}else if(esMenor(campo, nodo.campo)){
+			return buscar(((ArbolPrecipitaciones)nodo.hijoIzquierdo).raiz, campo);
+		}else if(esMayor(campo, nodo.campo)){
+			return buscar(((ArbolPrecipitaciones)nodo.hijoDerecho).raiz, campo);
+		}
+		return null;
 	}
 }
