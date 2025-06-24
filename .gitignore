@@ -1,2 +1,2 @@
 *.class
-tp-bootstrap/*
+tp-bootstrap/**
