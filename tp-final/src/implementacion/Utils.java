@@ -1,9 +1,9 @@
 package implementacion;
 
-class Utils {
-    class Fecha {
+public class Utils {
+    public static class Fecha {
 
-        static boolean fechaValida(int anio,int mes,int dia){
+        public static boolean fechaValida(int anio,int mes,int dia){
             if (anio < 1900 || anio > 2100) return false;
             if (mes < 1 || mes > 12) return false;
             if (dia < 1 || dia > diasEnMes(anio, mes)) return false;
@@ -22,24 +22,30 @@ class Utils {
         }
     }
 
-    static class Periodo { 
+    public static class Periodo { 
 
-        static String periodo(int anio, int mes) {
+        public static String periodo(int anio, int mes) {
             return String.valueOf(anio) + String.format("%02d", mes);
         }
 
-        static String periodo(String anio, String mes){
+        public static String periodo(String anio, String mes){
             return anio + String.format("%02d", Integer.parseInt(mes));
         }
         
-        static int[] descomponerPeriodo(String periodo) {
+        public static int[] descomponerPeriodo(String periodo) {
             if (periodo == null || periodo.length() != 6) {
-                throw new IllegalArgumentException("Formato periodo inválido");
+                return null;
             }
             
             int anio = Integer.parseInt(periodo.substring(0, 4));
             int mes = Integer.parseInt(periodo.substring(4, 6));
             return new int[]{anio, mes};
+        }
+        public static int obtenerMes(String periodo){
+            return descomponerPeriodo(periodo)[1];
+        }
+        public static int obtenerAnio(String periodo){
+            return descomponerPeriodo(periodo)[0];
         }
     }
 }
