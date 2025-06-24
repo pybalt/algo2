@@ -20,10 +20,6 @@ class Utils {
         private static boolean esBisiesto(int anio) {
             return (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
         }
-
-        private static String anioActual(){
-            return String.valueOf(java.time.Year.now().getValue());
-        }
     }
 
     static class Periodo { 
